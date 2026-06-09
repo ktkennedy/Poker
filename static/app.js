@@ -38,6 +38,8 @@ function refresh() {
 }
 
 async function advise() {
+  const btn = document.getElementById("adviseBtn");
+  btn.disabled = true;
   const out = document.getElementById("out");
   out.textContent = "계산 중... (서버가 자고 있으면 최대 ~30초)";
   const body = {
@@ -53,9 +55,13 @@ async function advise() {
       body: JSON.stringify(body),
     });
     const data = await res.json();
-    if (!res.ok) { out.textContent = "오류: " + (data.error || res.status); return; }
+    if (!res.ok) {
+      const msg = data.error || (data.detail && data.detail[0]?.msg) || res.status;
+      out.textContent = "오류: " + msg; return;
+    }
     render(data);
   } catch (e) { out.textContent = "네트워크 오류: " + e.message; }
+  finally { btn.disabled = false; }
 }
 
 function render(d) {

@@ -3,6 +3,7 @@ const ASSETS = ["/", "/index.html", "/style.css", "/app.js", "/manifest.json"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)));
+  self.skipWaiting();   // 재배포 시 즉시 활성화
 });
 
 self.addEventListener("activate", (e) => {
