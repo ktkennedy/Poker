@@ -16,7 +16,7 @@ def test_validate_rejects_duplicate_card():
 
 def test_validate_rejects_bad_board_length():
     with pytest.raises(InvalidState):
-        validate(_state(board=["Qs", "Jh"]))  # 2장은 불가(0/3/4/5만)
+        validate(_state(board=["Qs", "Jh"]))
 
 
 def test_validate_rejects_bad_opponent_count():
@@ -26,7 +26,7 @@ def test_validate_rejects_bad_opponent_count():
 
 def test_strong_hand_never_folds():
     rec = decide(_state(hole=["As", "Ah"], toCall=10), trials=5000)
-    assert rec["action"] != "fold"          # AA는 폴드 금지
+    assert rec["action"] != "fold"
 
 
 def test_check_when_no_bet_and_weak():
@@ -39,6 +39,23 @@ def test_fold_when_equity_below_potodds():
     rec = decide(_state(hole=["7s", "2h"], board=["As", "Kd", "Qc"],
                         numOpponents=3, pot=50, toCall=200), trials=5000)
     assert rec["action"] == "fold"
+
+
+def test_call_when_equity_between_potodds_and_raise_threshold():
+    rec = decide(_state(hole=["Js", "Ts"], board=[], numOpponents=1,
+                        pot=100, toCall=30), trials=5000)
+    assert rec["action"] == "call"
+
+
+def test_raise_when_strong_and_facing_bet():
+    rec = decide(_state(hole=["As", "Ah"], pot=100, toCall=30), trials=5000)
+    assert rec["action"] == "raise"
+    assert rec["size"] == round(100 + 2 * 30)
+
+
+def test_stack_cap_limits_raise_size():
+    rec = decide(_state(hole=["As", "Ah"], pot=100, toCall=30, myStack=10), trials=2000)
+    assert rec["size"] == 10
 
 
 def test_recommendation_shape():

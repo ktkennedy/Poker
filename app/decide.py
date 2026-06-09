@@ -1,12 +1,10 @@
 """게임 상태 → 추천 결정. 에쿼티(라이브) + 팟오즈 + EV 기반(EV 최대화, GTO 아님)."""
-from app.engine import equity
+from app.engine import equity, FULL_DECK
 
 RAISE_EQ = 0.65
 DEFAULT_TRIALS = 20000
 
-_RANKS = "23456789TJQKA"
-_SUITS = "shdc"
-_VALID_CARDS = {r + s for r in _RANKS for s in _SUITS}
+_VALID_CARDS = set(FULL_DECK)
 
 
 class InvalidState(ValueError):
@@ -51,13 +49,12 @@ def decide(state, trials=DEFAULT_TRIALS):
     n, pot, to_call, my_stack = (state["numOpponents"], state["pot"],
                                  state["toCall"], state["myStack"])
 
-    win, tie = equity(hole, board, n, trials=trials)
-    eq = win + tie / 2
+    eq = equity(hole, board, n, trials=trials)
 
     size = None
     if to_call == 0:
         required, ev_call = 0.0, 0.0
-        if eq >= RAISE_EQ:
+        if eq >= RAISE_EQ and pot > 0:
             action, size = "raise", round(0.6 * pot)
         else:
             action = "check"
