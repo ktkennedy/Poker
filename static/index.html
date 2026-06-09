@@ -7,9 +7,30 @@
   <title>Poker Advisor</title>
   <link rel="manifest" href="/manifest.json">
   <link rel="stylesheet" href="/style.css">
+  <script src="https://cdn.roboflow.com/0.2.26/roboflow.js"></script>
 </head>
 <body>
   <h1>♠ 포커 어드바이저</h1>
+
+  <details class="camera">
+    <summary>📷 보드 카메라</summary>
+    <div class="cam-settings">
+      <input id="rfKey" type="text" placeholder="Roboflow publishable 키">
+      <input id="rfModel" type="text" placeholder="모델 id (예: playing-cards-xxx)">
+      <input id="rfVersion" type="number" placeholder="버전" min="1" value="1">
+      <button id="rfSave">설정 저장</button>
+    </div>
+    <div class="cam-view">
+      <video id="cam" playsinline muted></video>
+      <canvas id="overlay"></canvas>
+    </div>
+    <div id="camCards" class="sel">인식: (없음)</div>
+    <div class="btns">
+      <button id="camStart" class="primary">카메라 켜기</button>
+      <button id="camConfirm">이 보드로 확정</button>
+      <button id="camStop">끄기</button>
+    </div>
+  </details>
 
   <div class="targets">
     <button class="tgl" data-t="hole">내 패 (2)</button>
@@ -36,6 +57,8 @@
 
   <div id="out" class="out"></div>
 
+  <script src="/cards.js"></script>
   <script src="/app.js"></script>
+  <script src="/camera.js"></script>
 </body>
 </html>

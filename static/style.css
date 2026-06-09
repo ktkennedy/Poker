@@ -22,3 +22,10 @@ h1 { font-size:20px; text-align:center; }
 .action { font-size:26px; font-weight:800; color:#f0c419; }
 .detail { font-size:13px; opacity:.85; margin:4px 0; }
 .reason { font-size:14px; }
+.camera { margin-bottom:12px; background:#14543f; border-radius:10px; padding:8px 12px; }
+.camera summary { cursor:pointer; font-size:15px; }
+.cam-settings { display:flex; flex-direction:column; gap:6px; margin:8px 0; }
+.cam-settings input { padding:8px; border-radius:6px; border:none; font-size:14px; }
+.cam-view { position:relative; width:100%; margin:8px 0; }
+.cam-view video, .cam-view canvas { width:100%; border-radius:8px; display:block; }
+.cam-view canvas { position:absolute; top:0; left:0; }
