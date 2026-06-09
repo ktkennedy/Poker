@@ -88,6 +88,12 @@ function reset() {
   refresh();
 }
 
+function setBoard(codes) {
+  state.board = sanitizeBoard(codes, state.hole);
+  refresh();
+}
+window.setBoard = setBoard;
+
 window.onload = () => {
   buildGrid();
   document.getElementById("adviseBtn").onclick = advise;
