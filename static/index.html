@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Poker Advisor</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <h1>♠ 포커 어드바이저</h1>
+
+  <div class="targets">
+    <button class="tgl" data-t="hole">내 패 (2)</button>
+    <button class="tgl" data-t="board">보드 (5)</button>
+  </div>
+  <div class="sel">내 패: <span id="holeSel"></span></div>
+  <div class="sel">보드: <span id="boardSel"></span></div>
+
+  <div id="grid" class="grid"></div>
+
+  <div class="nums">
+    <label>상대 수 <input id="opp" type="number" value="1" min="1" max="8"></label>
+    <label>팟 <input id="pot" type="number" value="100" min="0"></label>
+    <label>콜 금액 <input id="toCall" type="number" value="0" min="0"></label>
+    <label>내 스택 <input id="stack" type="number" value="500" min="0"></label>
+  </div>
+
+  <label class="voiceopt"><input id="voice" type="checkbox" checked> 음성으로 읽기</label>
+
+  <div class="btns">
+    <button id="adviseBtn" class="primary">추천 받기</button>
+    <button id="resetBtn">초기화</button>
+  </div>
+
+  <div id="out" class="out"></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
